@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitf0ab3ae1edb44c59da067437421f39af
+class ComposerStaticInite7fba73631df14452131fa7a3e8515d9
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
@@ -25,6 +25,7 @@ class ComposerStaticInitf0ab3ae1edb44c59da067437421f39af
         ),
         'A' => 
         array (
+            'App\\Kernel\\' => 11,
             'App\\' => 4,
         ),
     );
@@ -46,9 +47,14 @@ class ComposerStaticInitf0ab3ae1edb44c59da067437421f39af
         array (
             0 => __DIR__ . '/..' . '/laravel/pint/database/factories',
         ),
+        'App\\Kernel\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/kernel',
+        ),
         'App\\' => 
         array (
-            0 => __DIR__ . '/..' . '/laravel/pint/app',
+            0 => __DIR__ . '/../..' . '/src',
+            1 => __DIR__ . '/..' . '/laravel/pint/app',
         ),
     );
 
@@ -59,9 +65,9 @@ class ComposerStaticInitf0ab3ae1edb44c59da067437421f39af
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitf0ab3ae1edb44c59da067437421f39af::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitf0ab3ae1edb44c59da067437421f39af::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitf0ab3ae1edb44c59da067437421f39af::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInite7fba73631df14452131fa7a3e8515d9::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInite7fba73631df14452131fa7a3e8515d9::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInite7fba73631df14452131fa7a3e8515d9::$classMap;
 
         }, null, ClassLoader::class);
     }
