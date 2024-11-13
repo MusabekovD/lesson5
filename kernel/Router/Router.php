@@ -1,17 +1,20 @@
 <?php
 
-namespace  App\Kernel\Router;
+namespace App\Kernel\Router;
+
+use App\Kernel\Controller\Controller;
+use App\Kernel\View\View;
 
 class Router
 {
-
     private array $routes = [
         'GET' => [],
         'POST' => [],
     ];
 
-    public function __construct()
-    {
+    public function __construct(
+        private View $view
+    ) {
         $this->initRoutes();
     }
 
@@ -19,36 +22,40 @@ class Router
     {
         $route = $this->findRoute($uri, $method);
 
-        if (!$route) {
+        if (! $route) {
             $this->notFound();
         }
 
         if (is_array($route->getAction())) {
             [$controller, $action] = $route->getAction();
 
-            $controller = new $controller;
-            $controller->$action();
+            /** @var Controller $controller */
+            $controller = new $controller();
+
+            call_user_func([$controller, 'setView'], $this->view);
 
             call_user_func([$controller, $action]);
         } else {
-            call_user_func($route->getAction()());
+            call_user_func($route->getAction());
         }
-    }
-    private function notFound()
-    {
-        echo "404|Not Found";
-        exit();
     }
 
-    public function findRoute(string $uri, string $method): Route|false
+    private function notFound(): void
     {
-        if (!isset($this->routes[$method][$uri])) {
+        echo '404 | Not Found';
+        exit;
+    }
+
+    private function findRoute(string $uri, string $method): Route|false
+    {
+        if (! isset($this->routes[$method][$uri])) {
             return false;
         }
+
         return $this->routes[$method][$uri];
     }
 
-    public function initRoutes()
+    private function initRoutes(): void
     {
         $routes = $this->getRoutes();
 
@@ -56,8 +63,12 @@ class Router
             $this->routes[$route->getMethod()][$route->getUri()] = $route;
         }
     }
-    public function getRoutes(): array
+
+    /**
+     * @return Route[]
+     */
+    private function getRoutes(): array
     {
-        return require_once APP_PATH . '/config/routes.php';
+        return require_once APP_PATH.'/config/routes.php';
     }
 }
