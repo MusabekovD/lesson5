@@ -8,4 +8,10 @@ class View
     {
         include_once APP_PATH."/views/pages/$name.php";
     }
+
+
+    public function component(string $name): void
+    {
+        include_once APP_PATH."/views/components/$name.php";
+    }
 }
